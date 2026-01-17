@@ -3,18 +3,18 @@ import CartWidget from './CartWidget'
 
 const  NavBar = () => {
     return (
-        <nav>
+        <nav className="flex justify-between items-center p-4 bg-gray-800 text-white">
 
             {/* {Nombre de la tienda} */}
-            <h2>Titan Store - Ecommerce</h2>
+            <h2 className="text-xl font-bold">Titan Store - Ecommerce</h2>
 
             {/* {Categorias} */}
-            <div>
+            <div className="flex gap-4">
 
-                <button>LIQUIDACIÓN</button>
-                <button>SUPLEMENTOS</button>
-                <button>COMBOS</button>
-                <button>MAYORISTAS</button>
+                <button className="hover:text-blue-400 cursor-pointer">LIQUIDACIÓN</button>
+                <button className="hover:text-blue-400 cursor-pointer">SUPLEMENTOS</button>
+                <button className="hover:text-blue-400 cursor-pointer">COMBOS</button>
+                <button className="hover:text-blue-400 cursor-pointer">MAYORISTAS</button>
 
             </div>
 
