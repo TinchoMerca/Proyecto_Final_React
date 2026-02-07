@@ -11,12 +11,6 @@ const NavBar = () => {
             </Link>
 
             <div className="flex gap-8 font-medium">
-                <NavLink
-                    to={'/category/proteinas'}
-                    className={({ isActive }) => isActive ? 'text-orange-400 border-b-2 border-orange-400' : 'hover:text-gray-300 transition-colors'}
-                >
-                    Proteínas
-                </NavLink>
 
                 <NavLink
                     to={'/category/creatinas'}
@@ -26,11 +20,19 @@ const NavBar = () => {
                 </NavLink>
 
                 <NavLink
+                    to={'/category/proteinas'}
+                    className={({ isActive }) => isActive ? 'text-orange-400 border-b-2 border-orange-400' : 'hover:text-gray-300 transition-colors'}
+                >
+                    Proteínas
+                </NavLink>
+
+                <NavLink
                     to={'/category/preentrenos'}
                     className={({ isActive }) => isActive ? 'text-orange-400 border-b-2 border-orange-400' : 'hover:text-gray-300 transition-colors'}
                 >
                     Pre-Workouts
                 </NavLink>
+                
             </div>
 
             <CartWidget />
