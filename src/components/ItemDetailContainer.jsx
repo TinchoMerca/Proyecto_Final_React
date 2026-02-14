@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getProductById } from '../mock/asyncMock';
 import ItemDetail from './ItemDetail';
+import Loader from './Loader';
 
 const ItemDetailContainer = () => {
     const [product, setProduct] = useState(null);
@@ -30,11 +31,10 @@ const ItemDetailContainer = () => {
     return (
 
         <div className="min-h-screen bg-gray-900 flex justify-center items-start py-20 px-4">
-            {loading ? (
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500 mt-20"></div>
-            ) : (
-                <ItemDetail {...product} />
-            )}
+            {loading 
+            ? <Loader loading={loading} />
+            : (<ItemDetail {...product} />)
+            }
         </div>
     );
 
