@@ -1,12 +1,23 @@
-import React from 'react'
+import { useContext } from 'react';
+import { CartContext } from '../context/CartContext';
+import { Link } from 'react-router-dom';
 
 const CartWidget = () => {
+
+    const { cartQuantity } = useContext(CartContext)
+
+    const totalQuantity = cartQuantity()
+
+    /* if(totalQuantity === 0){
+        return null
+    } */
+
     return (
-        <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+        <Link to='/cart' className="flex items-center text-white hover:text-orange-500 transition-colors relative">
 
             <span style={{ fontSize: '24px', marginRight: '5px' }}>🛒</span>
 
-            <span style={{
+            {totalQuantity > 0 && (<span style={{
                 backgroundColor: 'red',
                 color: 'white',
                 borderRadius: '50%',
@@ -14,9 +25,10 @@ const CartWidget = () => {
                 fontSize: '12px',
                 fontWeight: 'bold'
             }}>
-                0 {/* Este número luego será dinámico */}
-            </span>
-        </div>
+                {totalQuantity}
+            </span>)}
+
+        </Link>
     )
 }
 

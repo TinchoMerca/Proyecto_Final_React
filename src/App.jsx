@@ -1,9 +1,10 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { CartContext } from './context/CartContext'
+import { CartProvider } from './context/CartContext'
 
 import NavBar from './components/NavBar'
 import ItemListContainer from './components/ItemListContainer'
 import ItemDetailContainer from './components/ItemDetailContainer'
+import CartContainer from './components/CartContainer'
 import NotFound from './components/NotFound'
 
 function App() {
@@ -12,16 +13,17 @@ function App() {
     <div className="App">
 
       <BrowserRouter>
-        <CartContext>
+        <CartProvider>
           <NavBar />
           <Routes>
             <Route path='/' element={<ItemListContainer greeting={'Todos nuestros productos'} />} />
             <Route path='/category/:categoryId' element={<ItemListContainer greeting={'Productos filtrados'} />} />
-            <Route path='/item/:itemId' element={<ItemDetailContainer />} />
+            <Route path='/item/:itemId' element={<ItemDetailContainer/>} />
+            <Route path='/cart' element={<CartContainer/>} />
 
             <Route path='*' element={<NotFound />} />
           </Routes>
-        </CartContext>
+        </CartProvider>
       </BrowserRouter>
 
     </div>
