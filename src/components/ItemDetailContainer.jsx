@@ -1,39 +1,48 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getProductById } from '../mock/asyncMock';
 import ItemDetail from './ItemDetail';
 import Loader from './Loader';
+
+import { doc, getDoc } from 'firebase/firestore'
+import { db } from '../services/firebase'
 
 const ItemDetailContainer = () => {
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // Capturamos el ID de la URL (definido en App.jsx como /item/:itemId)
     const { itemId } = useParams();
 
     useEffect(() => {
         setLoading(true);
 
-        // Llamamos a la función que busca POR ID
-        getProductById(itemId)
-            .then(response => {
-                setProduct(response);
+        const docRef = doc(db, 'items', itemId)
+
+        getDoc(docRef)
+            .then((snapshot) => {
+                if (snapshot.exists()) {
+                    const data = snapshot.data()
+                    const productAdapted = { id: snapshot.id, ...data }
+
+                    setProduct(productAdapted)
+                } else {
+                    console.log('El producto no existe')
+                }
             })
-            .catch(error => {
-                console.error(error);
+            .catch((error) => {
+                console.error('Error trayendo el producto: ', error)
             })
             .finally(() => {
-                setLoading(false);
-            });
+                setLoading(false)
+            })
 
     }, [itemId]);
 
     return (
 
         <div className="min-h-screen bg-gray-900 flex justify-center items-start py-20 px-4">
-            {loading 
-            ? <Loader loading={loading} />
-            : (<ItemDetail {...product} />)
+            {loading
+                ? <Loader loading={loading} />
+                : (<ItemDetail {...product} />)
             }
         </div>
     );

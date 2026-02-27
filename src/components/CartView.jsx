@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
+import { Link } from "react-router-dom";
 
 const CartView = () => {
     const { cart, removeItem, clear, cartTotal } = useContext(CartContext);
@@ -46,10 +47,10 @@ const CartView = () => {
             </div>
 
             <div className="mt-6 flex justify-end">
-                {/* Por ahora no hace nada, en la unidad final lo conectaremos a Firebase para el Checkout */}
-                <button className="bg-green-600 text-white font-bold py-3 px-8 rounded-lg uppercase tracking-wider hover:bg-green-700 transition-colors shadow-lg">
+
+                <Link to='/checkout' className="bg-green-600 text-white font-bold py-3 px-8 rounded-lg uppercase tracking-wider hover:bg-green-700 transition-colors shadow-lg">
                     Finalizar Compra
-                </button>
+                </Link>
             </div>
         </div>
     );

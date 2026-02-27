@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getProducts, getProductsByCategory } from '../mock/asyncMock';
 import ItemList from '../components/ItemList';
 import Loader from './Loader';
+import { collection, getDocs, query, where} from 'firebase/firestore';
+import { db } from '../services/firebase'
+
 
 const ItemListContainer = ({ greeting }) => {
     const [products, setProducts] = useState([]);
@@ -13,21 +15,26 @@ const ItemListContainer = ({ greeting }) => {
     useEffect(() => {
         setLoading(true);
 
-        const asyncFunc = categoryId ? getProductsByCategory : getProducts;
+        const itemsRef = categoryId
+            ? query(collection(db, 'items'), where('category', '==', categoryId))
+            : collection(db, 'items')
 
-        asyncFunc(categoryId)
-            .then(response => {
-                setProducts(response);
+        getDocs(itemsRef)
+            .then((snapshot) => {
+                const productsAdapted = snapshot.docs.map(doc => {
+                    const data = doc.data()
+                    return { id: doc.id, ...data }
+                })
+                setProducts(productsAdapted)
             })
             .catch(error => {
-                console.error(error);
+                console.error('Hubo un error trayendo los productos: ', error)
             })
             .finally(() => {
-                setLoading(false);
-            });
+                setLoading(false)
+            })
 
     }, [categoryId]);
-
 
     return (
         <div className="min-h-screen bg-gray-900 py-10 px-4 sm:px-6 lg:px-8">
@@ -45,11 +52,10 @@ const ItemListContainer = ({ greeting }) => {
                     </div>
                 )}
 
-                {loading ? (
-                    <Loader loading={loading}/>
-                ) : (
-                    <ItemList products={products} />
-                )}
+                {loading
+                    ? (<Loader loading={loading} />)
+                    : (<ItemList products={products} />)
+                }
             </div>
         </div>
     );
