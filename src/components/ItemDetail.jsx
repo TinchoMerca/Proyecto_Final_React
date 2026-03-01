@@ -6,10 +6,8 @@ import { CartContext } from '../context/CartContext'
 
 const ItemDetail = ({ id, name, img, category, description, price, stock }) => {
 
-    // Estado local para saber si ya agregamos este producto
     const [quantityAdded, setQuantityAdded] = useState(0);
 
-    // Nos conectamos a la nube para traernos la función addItem
     const { addItem } = useContext(CartContext)
 
     const handleOnAdd = (quantity) => {
@@ -47,7 +45,7 @@ const ItemDetail = ({ id, name, img, category, description, price, stock }) => {
 
                 {/* Sección de compra */}
                 <div className="border-t border-gray-200 pt-6">
-                    {// Si ya agregó cantidad, mostramos el botón de Terminar Compra. Si no, mostramos el contador.
+                    {
                         quantityAdded > 0
                             ? (
                                 <Link to='/cart' className="w-full block text-center bg-green-600 text-white font-bold py-3 px-6 rounded-lg uppercase tracking-wider hover:bg-green-700 transition-colors shadow-md hover:shadow-lg">

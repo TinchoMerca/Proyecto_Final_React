@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import ItemDetail from './ItemDetail';
 import Loader from './Loader';
 
@@ -11,6 +11,7 @@ const ItemDetailContainer = () => {
     const [loading, setLoading] = useState(true);
 
     const { itemId } = useParams();
+    const navigate = useNavigate()
 
     useEffect(() => {
         setLoading(true);
@@ -25,7 +26,7 @@ const ItemDetailContainer = () => {
 
                     setProduct(productAdapted)
                 } else {
-                    console.log('El producto no existe')
+                    navigate('/404')
                 }
             })
             .catch((error) => {

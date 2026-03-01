@@ -1,20 +1,41 @@
-# React + Vite
+# 🏋️‍♂️ MuscleStore - E-commerce de Suplementos 🛒
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
 
-Currently, two official plugins are available:
+Este proyecto es una aplicación web de e-commerce dedicada a la venta de suplementos deportivos. Fue realizado como proyecto final integrador para el curso de React JS en Coderhouse.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![app](/public/captura.jpeg)
 
-## React Compiler
+## ✨ Funcionalidades
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Navegación Dinámica:** Rutas para categorías y detalles de productos sin recargar la página.
+- **Gestión de Carrito:** Agregar, eliminar, vaciar y calcular el total de la compra utilizando Context API.
+- **Base de Datos:** Catálogo de productos y registro de órdenes almacenados en Firebase/Firestore.
+- **Control de Stock:** Validación de inventario antes de generar la compra mediante lotes.
+- **Validación de Formulario:** Comprobación estricta de datos del cliente para asegurar el flujo de compra.
 
-## Expanding the ESLint configuration
+### Instalación ⚙️
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Clone el repositorio: `git clone https://github.com/TinchoMerca/Proyecto_Final_React.git`
+2. Muévase a la carpeta creada con el comando: `cd e-commerce-suplementos`
+3. Ejecute el comando `npm install` para instalar dependencias y crear la carpeta `node_modules`.
+4. **Importante:** Cree un archivo `.env` en la raíz del proyecto guiándose con el archivo `.env.example` y coloque sus propias credenciales de Firebase.
+5. Ejecute el comando `npm run dev` para levantar la app en un entorno local.
 
+> Es necesario contar con Node.js instalado en su equipo.
 
-AYUDA
-https://gemini.google.com/app/f8e38f479b6ad54a?_gl=1*182u35k*_gcl_au*MTgyODAyNzU0NS4xNzYwMTQ2NzM4LjE5OTc0MDM2ODIuMTc2MDY0MDEwNi4xNzYwNjQwMTA2 # Proyecto_Final_React
+### Version Host 💻
+
+Si desea ver el proyecto online y probar su funcionalidad, puede ingresar al siguiente link: [Link a tu deploy en Vercel]
+
+### Librerías utilizadas 📖
+
+- [Tailwind CSS](https://tailwindcss.com/): utilizada para el diseño ágil y responsivo de la interfaz.
+- [React Router Dom](https://reactrouter.com/): utilizada para implementar la navegación dinámica por rutas (SPA).
+- [Firebase](https://firebase.google.com/): utilizada como base de datos en la nube (Firestore) para el catálogo y órdenes de compra.
+- [Vite](https://vitejs.dev/): utilizada como entorno de desarrollo rápido.
+
+Desarrollado por Martín 🤭

@@ -8,10 +8,6 @@ const CartWidget = () => {
 
     const totalQuantity = cartQuantity()
 
-    /* if(totalQuantity === 0){
-        return null
-    } */
-
     return (
         <Link to='/cart' className="flex items-center text-white hover:text-orange-500 transition-colors relative">
 

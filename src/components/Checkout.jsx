@@ -2,52 +2,70 @@ import { useState, useContext } from 'react'
 import { CartContext } from '../context/CartContext'
 import { Link } from 'react-router-dom'
 
-import { collection, addDoc } from 'firebase/firestore'
+import { collection, addDoc, updateDoc, doc, getDoc } from 'firebase/firestore';
 import { db } from '../services/firebase'
 
 const Checkout = () => {
     const [nombre, setNombre] = useState('')
     const [telefono, setTelefono] = useState('')
     const [email, setEmail] = useState('')
+    const [emailConfirmacion, setEmailConfirmacion] = useState('');
+    const [error, setError] = useState('');
 
     const [ordenId, setOrdenId] = useState('')
 
     const { cart, cartTotal, clear } = useContext(CartContext)
 
-    const crearOrden = (e) => {
-        // Evitamos que el formulario recargue la página 
-        e.preventDefault()
+    const crearOrden = async (e) => {
+        e.preventDefault();
 
-        const orden = {
-            buyer: {
-                name: nombre,
-                phone: telefono,
-                email: email
-            },
-
-            items: cart.map(prod => ({
-                id: prod.id,
-                title: prod.name,
-                price: prod.price,
-                quantity: prod.quantity
-            })),
-
-            total: cartTotal(),
-
-            date: new Date()
+        if (!nombre || !telefono || !email || !emailConfirmacion) {
+            setError("Por favor completa todos los campos");
+            return;
         }
+        if (email !== emailConfirmacion) {
+            setError("Los campos del email no coinciden");
+            return;
+        }
+        setError('');
 
-        const orderRef = collection(db, "orders")
+        try {
+            const orden = {
+                buyer: { name: nombre, phone: telefono, email: email },
+                items: cart.map(prod => ({ id: prod.id, title: prod.name, price: prod.price, quantity: prod.quantity })),
+                total: cartTotal(),
+                date: new Date()
+            };
 
-        addDoc(orderRef, orden)
-            .then((docRef) => {
-                setOrdenId(docRef.id)
-                clear()
-            })
-            .catch((error) => {
-                console.error("Error al crear la orden", error)
-            })
-    }
+            // Usamos Promise.all para esperar a verificar todos los productos del carrito al mismo tiempo
+            await Promise.all(
+                orden.items.map(async (productoOrden) => {
+                    const productoRef = doc(db, "items", productoOrden.id);
+                    const productoSnapshot = await getDoc(productoRef);
+
+                    const stockActual = productoSnapshot.data().stock;
+
+                    if (stockActual >= productoOrden.quantity) {
+                        await updateDoc(productoRef, {
+                            stock: stockActual - productoOrden.quantity
+                        });
+                    } else {
+                        throw new Error(`No hay stock suficiente para ${productoOrden.title}`);
+                    }
+                })
+            );
+
+            const orderRef = collection(db, "orders");
+            const docRef = await addDoc(orderRef, orden);
+
+            setOrdenId(docRef.id);
+            clear();
+
+        } catch (error) {
+            console.error("Error en la creación de la orden:", error);
+            setError(error.message);
+        }
+    };
 
 
     if (ordenId) {
@@ -91,6 +109,15 @@ const Checkout = () => {
                     value={email} onChange={(e) => setEmail(e.target.value)}
                     className="border p-2 rounded"
                 />
+                <input
+                    type="email" placeholder="Confirmar Email" required
+                    value={emailConfirmacion} onChange={(e) => setEmailConfirmacion(e.target.value)}
+                    className="border p-2 rounded"
+                />
+
+                {
+                    error && <p className="text-red-500 text-center font-bold mb-2">{error}</p>
+                }
 
                 <button type="submit" className="bg-green-600 text-white font-bold py-2 rounded mt-4">
                     Generar Orden

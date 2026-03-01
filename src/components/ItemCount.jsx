@@ -39,7 +39,6 @@ const ItemCount = ({ stock, initial, onAdd }) => {
                 </button>
             </div>
 
-            {/* Botón Agregar al Carrito */}
             <button 
                 className="w-full bg-orange-600 text-white font-bold py-3 px-6 rounded-lg uppercase tracking-wider hover:bg-orange-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
                 onClick={() => onAdd(quantity)}
