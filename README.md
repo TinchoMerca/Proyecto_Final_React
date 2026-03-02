@@ -20,7 +20,7 @@ Este proyecto es una aplicación web de e-commerce dedicada a la venta de suplem
 ### Instalación ⚙️
 
 1. Clone el repositorio: `git clone https://github.com/TinchoMerca/Proyecto_Final_React.git`
-2. Muévase a la carpeta creada con el comando: `cd e-commerce-suplementos`
+2. Muévase a la carpeta creada con el comando: `cd Proyecto_Final_React`
 3. Ejecute el comando `npm install` para instalar dependencias y crear la carpeta `node_modules`.
 4. **Importante:** Cree un archivo `.env` en la raíz del proyecto guiándose con el archivo `.env.example` y coloque sus propias credenciales de Firebase.
 5. Ejecute el comando `npm run dev` para levantar la app en un entorno local.
