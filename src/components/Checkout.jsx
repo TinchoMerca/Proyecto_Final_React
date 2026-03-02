@@ -2,32 +2,32 @@ import { useState, useContext } from 'react'
 import { CartContext } from '../context/CartContext'
 import { Link } from 'react-router-dom'
 
-import { collection, addDoc, updateDoc, doc, getDoc } from 'firebase/firestore';
+import { collection, addDoc, updateDoc, doc, getDoc } from 'firebase/firestore'
 import { db } from '../services/firebase'
 
 const Checkout = () => {
     const [nombre, setNombre] = useState('')
     const [telefono, setTelefono] = useState('')
     const [email, setEmail] = useState('')
-    const [emailConfirmacion, setEmailConfirmacion] = useState('');
-    const [error, setError] = useState('');
+    const [emailConfirmacion, setEmailConfirmacion] = useState('')
+    const [error, setError] = useState('')
 
     const [ordenId, setOrdenId] = useState('')
 
     const { cart, cartTotal, clear } = useContext(CartContext)
 
     const crearOrden = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
         if (!nombre || !telefono || !email || !emailConfirmacion) {
-            setError("Por favor completa todos los campos");
-            return;
+            setError("Por favor completa todos los campos")
+            return
         }
         if (email !== emailConfirmacion) {
-            setError("Los campos del email no coinciden");
-            return;
+            setError("Los campos del email no coinciden")
+            return
         }
-        setError('');
+        setError('')
 
         try {
             const orden = {
@@ -35,37 +35,37 @@ const Checkout = () => {
                 items: cart.map(prod => ({ id: prod.id, title: prod.name, price: prod.price, quantity: prod.quantity })),
                 total: cartTotal(),
                 date: new Date()
-            };
+            }
 
             // Usamos Promise.all para esperar a verificar todos los productos del carrito al mismo tiempo
             await Promise.all(
                 orden.items.map(async (productoOrden) => {
-                    const productoRef = doc(db, "items", productoOrden.id);
-                    const productoSnapshot = await getDoc(productoRef);
+                    const productoRef = doc(db, "items", productoOrden.id)
+                    const productoSnapshot = await getDoc(productoRef)
 
-                    const stockActual = productoSnapshot.data().stock;
+                    const stockActual = productoSnapshot.data().stock
 
                     if (stockActual >= productoOrden.quantity) {
                         await updateDoc(productoRef, {
                             stock: stockActual - productoOrden.quantity
-                        });
+                        })
                     } else {
-                        throw new Error(`No hay stock suficiente para ${productoOrden.title}`);
+                        throw new Error(`No hay stock suficiente para ${productoOrden.title}`)
                     }
                 })
-            );
+            )
 
-            const orderRef = collection(db, "orders");
-            const docRef = await addDoc(orderRef, orden);
+            const orderRef = collection(db, "orders")
+            const docRef = await addDoc(orderRef, orden)
 
-            setOrdenId(docRef.id);
-            clear();
+            setOrdenId(docRef.id)
+            clear()
 
         } catch (error) {
-            console.error("Error en la creación de la orden:", error);
-            setError(error.message);
+            console.error("Error en la creación de la orden:", error)
+            setError(error.message)
         }
-    };
+    }
 
 
     if (ordenId) {
@@ -124,7 +124,7 @@ const Checkout = () => {
                 </button>
             </form>
         </div>
-    );
-};
+    )
+}
 
-export default Checkout;
+export default Checkout

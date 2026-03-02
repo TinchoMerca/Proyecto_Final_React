@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import ItemCount from './ItemCount'
 import { CartContext } from '../context/CartContext'
@@ -6,7 +6,7 @@ import { CartContext } from '../context/CartContext'
 
 const ItemDetail = ({ id, name, img, category, description, price, stock }) => {
 
-    const [quantityAdded, setQuantityAdded] = useState(0);
+    const [quantityAdded, setQuantityAdded] = useState(0)
 
     const { addItem } = useContext(CartContext)
 
@@ -15,7 +15,7 @@ const ItemDetail = ({ id, name, img, category, description, price, stock }) => {
 
         const item = { id, name, price, img }
         addItem(item, quantity)
-    };
+    }
 
     return (
         <div className="bg-white rounded-2xl shadow-2xl overflow-hidden max-w-4xl w-full flex flex-col md:flex-row">
@@ -57,7 +57,7 @@ const ItemDetail = ({ id, name, img, category, description, price, stock }) => {
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default ItemDetail;
+export default ItemDetail

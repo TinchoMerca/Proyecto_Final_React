@@ -1,9 +1,9 @@
-import { useContext } from "react";
-import { CartContext } from "../context/CartContext";
-import { Link } from "react-router-dom";
+import { useContext } from "react"
+import { CartContext } from "../context/CartContext"
+import { Link } from "react-router-dom"
 
 const CartView = () => {
-    const { cart, removeItem, clear, cartTotal } = useContext(CartContext);
+    const { cart, removeItem, clear, cartTotal } = useContext(CartContext)
 
     return (
         <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-4xl">
@@ -53,7 +53,7 @@ const CartView = () => {
                 </Link>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default CartView;
+export default CartView

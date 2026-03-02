@@ -1,19 +1,19 @@
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import ItemList from '../components/ItemList';
-import Loader from './Loader';
-import { collection, getDocs, query, where} from 'firebase/firestore';
+import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import ItemList from '../components/ItemList'
+import Loader from './Loader'
+import { collection, getDocs, query, where} from 'firebase/firestore'
 import { db } from '../services/firebase'
 
 
 const ItemListContainer = ({ greeting }) => {
-    const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [products, setProducts] = useState([])
+    const [loading, setLoading] = useState(true)
 
-    const { categoryId } = useParams();
+    const { categoryId } = useParams()
 
     useEffect(() => {
-        setLoading(true);
+        setLoading(true)
 
         const itemsRef = categoryId
             ? query(collection(db, 'items'), where('category', '==', categoryId))
@@ -34,7 +34,7 @@ const ItemListContainer = ({ greeting }) => {
                 setLoading(false)
             })
 
-    }, [categoryId]);
+    }, [categoryId])
 
     return (
         <div className="min-h-screen bg-gray-900 py-10 px-4 sm:px-6 lg:px-8">
@@ -58,7 +58,7 @@ const ItemListContainer = ({ greeting }) => {
                 }
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default ItemListContainer;
+export default ItemListContainer

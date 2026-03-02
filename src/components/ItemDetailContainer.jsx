@@ -1,20 +1,20 @@
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import ItemDetail from './ItemDetail';
-import Loader from './Loader';
+import { useState, useEffect } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
+import ItemDetail from './ItemDetail'
+import Loader from './Loader'
 
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '../services/firebase'
 
 const ItemDetailContainer = () => {
-    const [product, setProduct] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [product, setProduct] = useState(null)
+    const [loading, setLoading] = useState(true)
 
-    const { itemId } = useParams();
+    const { itemId } = useParams()
     const navigate = useNavigate()
 
     useEffect(() => {
-        setLoading(true);
+        setLoading(true)
 
         const docRef = doc(db, 'items', itemId)
 
@@ -36,7 +36,7 @@ const ItemDetailContainer = () => {
                 setLoading(false)
             })
 
-    }, [itemId]);
+    }, [itemId, navigate])
 
     return (
 
@@ -46,8 +46,8 @@ const ItemDetailContainer = () => {
                 : (<ItemDetail {...product} />)
             }
         </div>
-    );
+    )
 
-};
+}
 
-export default ItemDetailContainer;
+export default ItemDetailContainer

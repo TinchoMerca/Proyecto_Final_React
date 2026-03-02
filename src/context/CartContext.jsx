@@ -1,44 +1,52 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react"
 
-export const CartContext = createContext();
+export const CartContext = createContext()
 
 export const CartProvider = ({ children }) => {
-    const [cart, setCart] = useState([]);
+
+    const [cart, setCart] = useState(() => {
+        const savedCart = localStorage.getItem('carrito-ecommerce')
+        return savedCart ? JSON.parse(savedCart) : []
+    })
+
+    useEffect(() => {
+        localStorage.setItem('carrito-ecommerce', JSON.stringify(cart));
+    }, [cart]); 
 
     const addItem = (item, quantity) => {
         if (isInCart(item.id)) {
             setCart(cart.map(prod =>
                 prod.id === item.id ? { ...prod, quantity: prod.quantity + quantity } : prod
-            ));
+            ))
         } else {
-            setCart([...cart, { ...item, quantity }]);
+            setCart([...cart, { ...item, quantity }])
         }
-    };
+    }
 
     const removeItem = (itemId) => {
-        const cartUpdated = cart.filter(prod => prod.id !== itemId);
-        setCart(cartUpdated);
-    };
+        const cartUpdated = cart.filter(prod => prod.id !== itemId)
+        setCart(cartUpdated)
+    }
 
     const clear = () => {
-        setCart([]);
-    };
+        setCart([])
+    }
 
     const isInCart = (itemId) => {
-        return cart.some(prod => prod.id === itemId);
-    };
+        return cart.some(prod => prod.id === itemId)
+    }
 
     const cartQuantity = () => {
-        return cart.reduce((acc, prod) => acc + prod.quantity, 0);
-    };
+        return cart.reduce((acc, prod) => acc + prod.quantity, 0)
+    }
 
     const cartTotal = () => {
-        return cart.reduce((acc, prod) => acc + (prod.price * prod.quantity), 0);
-    };
+        return cart.reduce((acc, prod) => acc + (prod.price * prod.quantity), 0)
+    }
 
     return (
         <CartContext.Provider value={{ cart, addItem, removeItem, clear, isInCart, cartQuantity, cartTotal }}>
             {children}
         </CartContext.Provider>
-    );
-};
+    )
+}

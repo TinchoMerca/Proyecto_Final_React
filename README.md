@@ -29,7 +29,7 @@ Este proyecto es una aplicación web de e-commerce dedicada a la venta de suplem
 
 ### Version Host 💻
 
-Si desea ver el proyecto online y probar su funcionalidad, puede ingresar al siguiente link: [Link a tu deploy en Vercel]
+Si desea ver el proyecto online y probar su funcionalidad, puede ingresar al siguiente link: https://proyecto-final-react-musclestore.vercel.app
 
 ### Librerías utilizadas 📖
 
